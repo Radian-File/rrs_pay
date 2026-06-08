@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using rrs_pay.ViewModels.Pages;
 using rrs_pay.Views.Pages;
 
 namespace rrs_pay.ViewModels;
@@ -16,6 +17,8 @@ public sealed class MainViewModel : ViewModelBase
     public MainViewModel()
     {
         NavigateCommand = new RelayCommand(parameter => NavigateTo(parameter as NavigationItem));
+        NewPayrollRunCommand = new RelayCommand(OpenNewPayrollRun);
+        AlertsCommand = new RelayCommand(OpenAlerts);
 
         NavigationItems = new ObservableCollection<NavigationItem>
         {
@@ -36,6 +39,8 @@ public sealed class MainViewModel : ViewModelBase
     public ObservableCollection<NavigationItem> NavigationItems { get; }
 
     public ICommand NavigateCommand { get; }
+    public ICommand NewPayrollRunCommand { get; }
+    public ICommand AlertsCommand { get; }
 
     public object? CurrentPage
     {
@@ -85,6 +90,30 @@ public sealed class MainViewModel : ViewModelBase
         CurrentPageSubtitle = item.Description;
         CurrentPage = CreatePage(item.Title);
         StatusText = $"Ready • {item.Title} • {DateTime.Now:MMM dd, yyyy h:mm tt}";
+    }
+
+    private void NavigateToTitle(string title)
+    {
+        NavigateTo(NavigationItems.FirstOrDefault(item => item.Title == title));
+    }
+
+    private void OpenNewPayrollRun()
+    {
+        NavigateToTitle("Payroll");
+
+        if (CurrentPage is PayrollView { DataContext: PayrollViewModel payrollViewModel } &&
+            payrollViewModel.PrepareNewRunCommand.CanExecute(null))
+        {
+            payrollViewModel.PrepareNewRunCommand.Execute(null);
+        }
+
+        StatusText = $"New payroll run ready • Payroll • {DateTime.Now:MMM dd, yyyy h:mm tt}";
+    }
+
+    private void OpenAlerts()
+    {
+        NavigateToTitle("Audit Logs");
+        StatusText = $"Alerts opened in Audit Logs • {DateTime.Now:MMM dd, yyyy h:mm tt}";
     }
 
     private static object CreatePage(string title) => title switch

@@ -396,3 +396,12 @@ FodyWeavers.xsd
 *[Dd]esign*.jpeg
 *[Dd]esign*.webp
 *[Dd]esign*.svg
+
+# RRS Pay local runtime data and portfolio publish outputs
+# App defaults write data outside the repo under LocalAppData and Documents.
+**/*.db
+**/*.db-wal
+**/*.db-shm
+**/[Bb]ackups/
+**/[Ee]xports/
+artifacts/

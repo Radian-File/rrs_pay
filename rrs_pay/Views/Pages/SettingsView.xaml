@@ -46,7 +46,24 @@
                                   IsChecked="{Binding AutoCalculateLateDeductions}"
                                   Foreground="{StaticResource SecondaryTextBrush}"
                                   Margin="0,0,0,16" />
-                        <Button Content="Save Settings" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Left" />
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Save Settings" Command="{Binding SaveSettingsCommand}" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Left" />
+                            <Button Content="Backup" Command="{Binding BackupCommand}" Style="{StaticResource SecondaryButtonStyle}" HorizontalAlignment="Left" />
+                            <Button Content="Restore" Command="{Binding RestoreCommand}" Style="{StaticResource SecondaryButtonStyle}" HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource MutedTextBrush}" Margin="0,12,0,0" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource DangerBrush}" Margin="0,6,0,0" TextWrapping="Wrap">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <Trigger Property="Text" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </StackPanel>
                 </Border>
 
@@ -60,7 +77,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <Border Background="{StaticResource PanelAltBackgroundBrush}" CornerRadius="10" Padding="12" Margin="0,16,0,0">
-                            <TextBlock Text="These are MVP client-side fields. Persist settings through the Data/Services layer when available."
+                            <TextBlock Text="Settings are persisted in SQLite. Database backups are stored outside the repo under Documents/RRS Pay/Backups."
                                        Foreground="{StaticResource MutedTextBrush}"
                                        TextWrapping="Wrap" />
                         </Border>

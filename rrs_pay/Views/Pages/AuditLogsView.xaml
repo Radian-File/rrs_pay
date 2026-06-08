@@ -30,28 +30,58 @@
         </StackPanel>
 
         <Border Grid.Row="1" Style="{StaticResource CardBorderStyle}">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Width="340" Margin="0,0,18,0">
-                    <TextBlock Text="Search" Style="{StaticResource CaptionText}" />
-                    <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputTextBoxStyle}" ToolTip="Search audit activity" />
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Width="340" Margin="0,0,18,0">
+                        <TextBlock Text="Search" Style="{StaticResource CaptionText}" />
+                        <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputTextBoxStyle}" ToolTip="Search audit activity" />
+                    </StackPanel>
+                    <Button Content="Apply Filter" Command="{Binding ApplyFilterCommand}" Style="{StaticResource PrimaryButtonStyle}" VerticalAlignment="Center" />
+                    <Button Content="Export" Command="{Binding ExportCommand}" Style="{StaticResource SecondaryButtonStyle}" VerticalAlignment="Center" />
                 </StackPanel>
-                <Button Content="Apply Filter" Style="{StaticResource PrimaryButtonStyle}" VerticalAlignment="Center" />
-                <Button Content="Export" Style="{StaticResource SecondaryButtonStyle}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource MutedTextBrush}" Margin="0,10,0,0" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource DangerBrush}" Margin="0,6,0,0" TextWrapping="Wrap">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </StackPanel>
         </Border>
 
         <Border Grid.Row="2" Style="{StaticResource CardBorderStyle}">
             <StackPanel>
                 <TextBlock Text="Recent Audit Activity" Style="{StaticResource SectionTitleText}" />
-                <DataGrid ItemsSource="{Binding AuditEntries}" Style="{StaticResource DarkDataGridStyle}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp, StringFormat={}{0:dd MMM yyyy HH:mm}}" Width="160" />
-                        <DataGridTextColumn Header="Actor" Binding="{Binding Actor}" Width="1.2*" />
-                        <DataGridTextColumn Header="Action" Binding="{Binding Action}" Width="1.5*" />
-                        <DataGridTextColumn Header="Area" Binding="{Binding Area}" Width="110" />
-                        <DataGridTextColumn Header="Reference" Binding="{Binding Reference}" Width="1.3*" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid MinHeight="280">
+                    <DataGrid ItemsSource="{Binding FilteredAuditEntries}" Style="{StaticResource DarkDataGridStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp, StringFormat={}{0:dd MMM yyyy HH:mm}}" Width="160" />
+                            <DataGridTextColumn Header="Actor" Binding="{Binding Actor}" Width="1.2*" />
+                            <DataGridTextColumn Header="Action" Binding="{Binding Action}" Width="1.5*" />
+                            <DataGridTextColumn Header="Area" Binding="{Binding Area}" Width="110" />
+                            <DataGridTextColumn Header="Reference" Binding="{Binding Reference}" Width="1.3*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Border Background="{StaticResource PanelAltBackgroundBrush}" CornerRadius="12" Padding="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasAuditEntries}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <TextBlock Text="No audit entries match the current filter." Foreground="{StaticResource MutedTextBrush}" />
+                    </Border>
+                </Grid>
             </StackPanel>
         </Border>
     </Grid>

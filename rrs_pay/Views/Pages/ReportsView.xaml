@@ -30,30 +30,61 @@
         </StackPanel>
 
         <Border Grid.Row="1" Style="{StaticResource CardBorderStyle}">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Width="240" Margin="0,0,18,0">
-                    <TextBlock Text="Report Type" Style="{StaticResource CaptionText}" />
-                    <ComboBox ItemsSource="{Binding ReportTypes}" SelectedItem="{Binding SelectedReport}" Style="{StaticResource InputComboBoxStyle}" />
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Width="240" Margin="0,0,18,0">
+                        <TextBlock Text="Report Type" Style="{StaticResource CaptionText}" />
+                        <ComboBox ItemsSource="{Binding ReportTypes}" SelectedItem="{Binding SelectedReport}" Style="{StaticResource InputComboBoxStyle}" />
+                    </StackPanel>
+                    <StackPanel Width="180" Margin="0,0,18,0">
+                        <TextBlock Text="Period" Style="{StaticResource CaptionText}" />
+                        <ComboBox ItemsSource="{Binding Periods}" SelectedItem="{Binding SelectedPeriod}" Style="{StaticResource InputComboBoxStyle}" />
+                    </StackPanel>
+                    <Button Content="Preview" Command="{Binding PreviewCommand}" Style="{StaticResource PrimaryButtonStyle}" VerticalAlignment="Center" />
+                    <Button Content="Export Excel" Command="{Binding ExportExcelCommand}" Style="{StaticResource SecondaryButtonStyle}" VerticalAlignment="Center" />
+                    <Button Content="Export PDF" Command="{Binding ExportPdfCommand}" Style="{StaticResource SecondaryButtonStyle}" VerticalAlignment="Center" />
                 </StackPanel>
-                <StackPanel Width="180" Margin="0,0,18,0">
-                    <TextBlock Text="Period" Style="{StaticResource CaptionText}" />
-                    <ComboBox ItemsSource="{Binding Periods}" SelectedItem="{Binding SelectedPeriod}" Style="{StaticResource InputComboBoxStyle}" />
-                </StackPanel>
-                <Button Content="Preview" Style="{StaticResource PrimaryButtonStyle}" VerticalAlignment="Center" />
-                <Button Content="Export CSV" Style="{StaticResource SecondaryButtonStyle}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource MutedTextBrush}" Margin="0,10,0,0" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource DangerBrush}" Margin="0,6,0,0" TextWrapping="Wrap">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </StackPanel>
         </Border>
 
         <Border Grid.Row="2" Style="{StaticResource CardBorderStyle}">
             <StackPanel>
                 <TextBlock Text="Report Snapshot" Style="{StaticResource SectionTitleText}" />
-                <DataGrid ItemsSource="{Binding ReportRows}" Style="{StaticResource DarkDataGridStyle}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Metric" Binding="{Binding Metric}" Width="1.4*" />
-                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="1*" />
-                        <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="2*" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid MinHeight="280">
+                    <DataGrid ItemsSource="{Binding ReportRows}" Style="{StaticResource DarkDataGridStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Metric" Binding="{Binding Metric}" Width="1.4*" />
+                            <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="1*" />
+                            <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="2*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Border Background="{StaticResource PanelAltBackgroundBrush}" CornerRadius="12" Padding="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasReportRows}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <TextBlock Text="No report rows are available. Choose a report and click Preview." Foreground="{StaticResource MutedTextBrush}" />
+                    </Border>
+                </Grid>
             </StackPanel>
         </Border>
     </Grid>

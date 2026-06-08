@@ -20,8 +20,13 @@
 
     <ScrollViewer Background="{StaticResource PageBackgroundBrush}" VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="28">
-            <TextBlock Text="Payroll Detail" Style="{StaticResource PageTitleText}" />
-            <TextBlock Text="Detailed payroll calculation and payslip preview for an employee." Foreground="{StaticResource SecondaryTextBrush}" Margin="0,0,0,18" />
+            <DockPanel Margin="0,0,0,6">
+                <TextBlock Text="Payroll Detail" Style="{StaticResource PageTitleText}" />
+                <Button DockPanel.Dock="Right" Content="Export Payslip PDF" Command="{Binding ExportPayslipCommand}" Style="{StaticResource SecondaryButtonStyle}" VerticalAlignment="Center" />
+            </DockPanel>
+            <TextBlock Text="Detailed payroll calculation and payslip preview for an employee." Foreground="{StaticResource SecondaryTextBrush}" />
+            <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource MutedTextBrush}" TextWrapping="Wrap" Margin="0,4,0,0" />
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource WarningBrush}" TextWrapping="Wrap" Margin="0,4,0,18" />
 
             <Grid>
                 <Grid.ColumnDefinitions>

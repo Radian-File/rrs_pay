@@ -119,8 +119,13 @@
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 Margin="18,0,0,0">
-                        <Button Content="New Payroll Run" Style="{StaticResource PrimaryButtonStyle}" />
-                        <Button Content="Alerts" Style="{StaticResource GhostButtonStyle}" Margin="10,0,0,0" />
+                        <Button Content="New Payroll Run"
+                                Command="{Binding NewPayrollRunCommand}"
+                                Style="{StaticResource PrimaryButtonStyle}" />
+                        <Button Content="Alerts"
+                                Command="{Binding AlertsCommand}"
+                                Style="{StaticResource GhostButtonStyle}"
+                                Margin="10,0,0,0" />
                     </StackPanel>
                 </Grid>
             </Border>

@@ -24,5 +24,6 @@ public enum PayrollStatus
     Calculated = 1,
     Approved = 2,
     Paid = 3,
-    Cancelled = 4
+    Cancelled = 4,
+    Reviewed = 5
 }

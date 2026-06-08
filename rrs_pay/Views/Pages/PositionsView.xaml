@@ -61,7 +61,9 @@
             <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}">
                 <StackPanel>
                     <TextBlock Text="Position List" Style="{StaticResource SectionTitleText}" />
-                    <DataGrid ItemsSource="{Binding Positions}" Style="{StaticResource DarkDataGridStyle}">
+                    <DataGrid ItemsSource="{Binding Positions}"
+                              SelectedItem="{Binding SelectedPosition, Mode=TwoWay}"
+                              Style="{StaticResource DarkDataGridStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="1.4*" />
                             <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="1.1*" />
