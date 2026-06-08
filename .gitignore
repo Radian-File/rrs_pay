@@ -361,3 +361,38 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Jarvis / local design notes and Figma exports
+# Keep brainstorming, design prompts, notes, and local visual references out of Git.
+**/design.md
+**/DESIGN.md
+**/notes.md
+**/NOTES.md
+**/handoff.md
+**/HANDOFF.md
+**/*handoff*.md
+**/*Handoff*.md
+**/*notes*.md
+**/*Notes*.md
+**/*design*.md
+**/*Design*.md
+**/[Dd]esign/
+**/[Dd]esigns/
+**/[Dd]esign-*/
+**/[Nn]otes/
+**/[Ff]igma/
+**/[Ff]igma-*/
+*.fig
+*.figma
+*.sketch
+*.xd
+*[Ff]igma*.png
+*[Ff]igma*.jpg
+*[Ff]igma*.jpeg
+*[Ff]igma*.webp
+*[Ff]igma*.svg
+*[Dd]esign*.png
+*[Dd]esign*.jpg
+*[Dd]esign*.jpeg
+*[Dd]esign*.webp
+*[Dd]esign*.svg

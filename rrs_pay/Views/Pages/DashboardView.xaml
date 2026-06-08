@@ -1,0 +1,85 @@
+<UserControl x:Class="rrs_pay.Views.Pages.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:rrs_pay.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Shared/PageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:DashboardViewModel />
+    </UserControl.DataContext>
+
+    <ScrollViewer Background="{StaticResource PageBackgroundBrush}" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28">
+            <TextBlock Text="Dashboard" Style="{StaticResource PageTitleText}" />
+            <TextBlock Text="Payroll readiness, HR activity, and review queue." Foreground="{StaticResource SecondaryTextBrush}" Margin="0,0,0,22" />
+
+            <ItemsControl ItemsSource="{Binding Metrics}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="4" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,14,14">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" Foreground="{StaticResource MutedTextBrush}" />
+                                <TextBlock Text="{Binding Value}" FontSize="26" FontWeight="SemiBold" Foreground="{StaticResource PrimaryTextBrush}" Margin="0,8,0,4" />
+                                <TextBlock Text="{Binding Detail}" Foreground="{StaticResource SecondaryTextBrush}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" Margin="0,0,14,0">
+                    <StackPanel>
+                        <TextBlock Text="Recent Activity" Style="{StaticResource SectionTitleText}" />
+                        <ItemsControl ItemsSource="{Binding RecentActivities}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1" Padding="0,10">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Title}" Foreground="{StaticResource PrimaryTextBrush}" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding Description}" Foreground="{StaticResource SecondaryTextBrush}" />
+                                            <TextBlock Text="{Binding Time}" Foreground="{StaticResource MutedTextBrush}" FontSize="11" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Payroll Queue" Style="{StaticResource SectionTitleText}" />
+                        <DataGrid ItemsSource="{Binding PayrollQueue}" Style="{StaticResource DarkDataGridStyle}" MinHeight="180">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Item" Binding="{Binding Name}" Width="*" />
+                                <DataGridTextColumn Header="Count" Binding="{Binding Count}" Width="70" />
+                                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="110" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

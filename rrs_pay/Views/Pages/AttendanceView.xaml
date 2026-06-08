@@ -1,0 +1,98 @@
+<UserControl x:Class="rrs_pay.Views.Pages.AttendanceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:rrs_pay.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Shared/PageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:AttendanceViewModel />
+    </UserControl.DataContext>
+
+    <Grid Background="{StaticResource PageBackgroundBrush}" Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,18">
+            <TextBlock Text="Attendance" Style="{StaticResource PageTitleText}" />
+            <TextBlock Text="Review monthly attendance, late minutes, and payroll exceptions." Foreground="{StaticResource SecondaryTextBrush}" />
+        </StackPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource CardBorderStyle}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <StackPanel Width="220" Margin="0,0,16,0">
+                    <TextBlock Text="Month" Style="{StaticResource CaptionText}" />
+                    <ComboBox ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedMonth}" Style="{StaticResource InputComboBoxStyle}" />
+                </StackPanel>
+                <StackPanel Width="180" Margin="0,0,16,0">
+                    <TextBlock Text="Status" Style="{StaticResource CaptionText}" />
+                    <ComboBox ItemsSource="{Binding Statuses}" SelectedItem="{Binding SelectedStatus}" Style="{StaticResource InputComboBoxStyle}" />
+                </StackPanel>
+                <Button Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource PrimaryButtonStyle}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding LastRefreshMessage}" Foreground="{StaticResource MutedTextBrush}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="12,0,0,0" />
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2.3*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" Margin="0,0,14,0">
+                <StackPanel>
+                    <TextBlock Text="Summary" Style="{StaticResource SectionTitleText}" />
+                    <ItemsControl ItemsSource="{Binding Summary}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource PanelAltBackgroundBrush}" CornerRadius="10" Padding="12" Margin="0,0,0,10">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Label}" Foreground="{StaticResource PrimaryTextBrush}" FontWeight="SemiBold" />
+                                            <TextBlock Text="{Binding Detail}" Foreground="{StaticResource MutedTextBrush}" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" Text="{Binding Count}" FontSize="22" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}">
+                <StackPanel>
+                    <TextBlock Text="Attendance Records" Style="{StaticResource SectionTitleText}" />
+                    <DataGrid ItemsSource="{Binding AttendanceRecords}" Style="{StaticResource DarkDataGridStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat={}{0:dd MMM yyyy}}" Width="120" />
+                            <DataGridTextColumn Header="Code" Binding="{Binding EmployeeCode}" Width="100" />
+                            <DataGridTextColumn Header="Employee" Binding="{Binding EmployeeName}" Width="1.4*" />
+                            <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="1.1*" />
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="90" />
+                            <DataGridTextColumn Header="In" Binding="{Binding ClockInText}" Width="70" />
+                            <DataGridTextColumn Header="Out" Binding="{Binding ClockOutText}" Width="70" />
+                            <DataGridTextColumn Header="Late Min" Binding="{Binding LateMinutes}" Width="80" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,72 @@
+<UserControl x:Class="rrs_pay.Views.Pages.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:rrs_pay.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Shared/PageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:SettingsViewModel />
+    </UserControl.DataContext>
+
+    <ScrollViewer Background="{StaticResource PageBackgroundBrush}" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28">
+            <TextBlock Text="Settings" Style="{StaticResource PageTitleText}" />
+            <TextBlock Text="Company profile, payroll rules, and security preferences." Foreground="{StaticResource SecondaryTextBrush}" Margin="0,0,0,18" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" Margin="0,0,14,0">
+                    <StackPanel>
+                        <TextBlock Text="Company &amp; Payroll" Style="{StaticResource SectionTitleText}" />
+                        <TextBlock Text="Company Name" Style="{StaticResource CaptionText}" />
+                        <TextBox Text="{Binding CompanyName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputTextBoxStyle}" />
+                        <TextBlock Text="Payroll Cutoff Day" Style="{StaticResource CaptionText}" />
+                        <TextBox Text="{Binding PayrollCutoffDay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputTextBoxStyle}" />
+                        <TextBlock Text="Default Currency" Style="{StaticResource CaptionText}" />
+                        <TextBox Text="{Binding DefaultCurrency, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputTextBoxStyle}" />
+                        <CheckBox Content="Require approval before releasing payslips"
+                                  IsChecked="{Binding RequireApprovalBeforePayslip}"
+                                  Foreground="{StaticResource SecondaryTextBrush}"
+                                  Margin="0,4,0,10" />
+                        <CheckBox Content="Automatically calculate late deductions"
+                                  IsChecked="{Binding AutoCalculateLateDeductions}"
+                                  Foreground="{StaticResource SecondaryTextBrush}"
+                                  Margin="0,0,0,16" />
+                        <Button Content="Save Settings" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Payroll Rules" Style="{StaticResource SectionTitleText}" />
+                        <DataGrid ItemsSource="{Binding PayrollRules}" Style="{StaticResource DarkDataGridStyle}" MinHeight="220">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Rule" Binding="{Binding Name}" Width="1.1*" />
+                                <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="1.4*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Border Background="{StaticResource PanelAltBackgroundBrush}" CornerRadius="10" Padding="12" Margin="0,16,0,0">
+                            <TextBlock Text="These are MVP client-side fields. Persist settings through the Data/Services layer when available."
+                                       Foreground="{StaticResource MutedTextBrush}"
+                                       TextWrapping="Wrap" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

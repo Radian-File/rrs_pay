@@ -1,0 +1,77 @@
+<UserControl x:Class="rrs_pay.Views.Pages.PositionsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:rrs_pay.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Shared/PageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:PositionsViewModel />
+    </UserControl.DataContext>
+
+    <Grid Background="{StaticResource PageBackgroundBrush}" Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="0,0,0,18">
+            <TextBlock Text="Positions" Style="{StaticResource PageTitleText}" />
+            <TextBlock Text="Manage job positions, salary grades, and department mapping." Foreground="{StaticResource SecondaryTextBrush}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" Margin="0,0,14,0">
+                <StackPanel>
+                    <TextBlock Text="Position Form" Style="{StaticResource SectionTitleText}" />
+                    <TextBlock Text="Title" Style="{StaticResource CaptionText}" />
+                    <TextBox Text="{Binding PositionTitle, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputTextBoxStyle}" />
+                    <TextBlock Text="Department" Style="{StaticResource CaptionText}" />
+                    <ComboBox ItemsSource="{Binding Departments}" SelectedItem="{Binding Department}" Style="{StaticResource InputComboBoxStyle}" />
+                    <TextBlock Text="Salary Grade Min" Style="{StaticResource CaptionText}" />
+                    <TextBox Text="{Binding SalaryGradeMin, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" Style="{StaticResource InputTextBoxStyle}" />
+                    <TextBlock Text="Salary Grade Max" Style="{StaticResource CaptionText}" />
+                    <TextBox Text="{Binding SalaryGradeMax, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" Style="{StaticResource InputTextBoxStyle}" />
+                    <TextBlock Text="Description" Style="{StaticResource CaptionText}" />
+                    <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                             AcceptsReturn="True"
+                             MinHeight="80"
+                             TextWrapping="Wrap"
+                             Style="{StaticResource InputTextBoxStyle}" />
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <Button Content="Save" Command="{Binding SavePositionCommand}" Style="{StaticResource PrimaryButtonStyle}" />
+                        <Button Content="Clear" Command="{Binding ClearFormCommand}" Style="{StaticResource SecondaryButtonStyle}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}">
+                <StackPanel>
+                    <TextBlock Text="Position List" Style="{StaticResource SectionTitleText}" />
+                    <DataGrid ItemsSource="{Binding Positions}" Style="{StaticResource DarkDataGridStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="1.4*" />
+                            <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="1.1*" />
+                            <DataGridTextColumn Header="Min" Binding="{Binding SalaryGradeMin, StringFormat={}{0:N0}}" Width="110" />
+                            <DataGridTextColumn Header="Max" Binding="{Binding SalaryGradeMax, StringFormat={}{0:N0}}" Width="110" />
+                            <DataGridTextColumn Header="Employees" Binding="{Binding EmployeeCount}" Width="90" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

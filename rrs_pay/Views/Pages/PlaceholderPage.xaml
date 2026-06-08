@@ -1,0 +1,155 @@
+<UserControl x:Class="rrs_pay.Views.Pages.PlaceholderPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Name="Root"
+             mc:Ignorable="d"
+             d:DesignHeight="640"
+             d:DesignWidth="960">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,18">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel>
+                        <TextBlock Text="{Binding Title, ElementName=Root}" Style="{StaticResource SectionTitleTextStyle}" />
+                        <TextBlock Text="{Binding Description, ElementName=Root}"
+                                   Style="{StaticResource SecondaryTextBlockStyle}"
+                                   TextWrapping="Wrap"
+                                   Margin="0,8,0,0" />
+                    </StackPanel>
+
+                    <Border Grid.Column="1"
+                            Style="{StaticResource BadgeBorderStyle}"
+                            VerticalAlignment="Top"
+                            Margin="18,0,0,0">
+                        <TextBlock Text="Placeholder"
+                                   Style="{StaticResource BadgeTextStyle}" />
+                    </Border>
+                </Grid>
+            </Border>
+
+            <UniformGrid Columns="4" Margin="0,0,0,18">
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
+                    <StackPanel>
+                        <TextBlock Text="Active Employees" Style="{StaticResource MutedTextBlockStyle}" />
+                        <TextBlock Text="128" FontSize="28" FontWeight="Bold" Margin="0,8,0,0" />
+                        <TextBlock Text="Ready for feature data binding" Style="{StaticResource SecondaryTextBlockStyle}" Margin="0,4,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
+                    <StackPanel>
+                        <TextBlock Text="Payroll Status" Style="{StaticResource MutedTextBlockStyle}" />
+                        <TextBlock Text="Draft" FontSize="28" FontWeight="Bold" Margin="0,8,0,0" />
+                        <TextBlock Text="Current pay period shell" Style="{StaticResource SecondaryTextBlockStyle}" Margin="0,4,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
+                    <StackPanel>
+                        <TextBlock Text="Attendance" Style="{StaticResource MutedTextBlockStyle}" />
+                        <TextBlock Text="94%" FontSize="28" FontWeight="Bold" Margin="0,8,0,0" />
+                        <TextBlock Text="Sample operational metric" Style="{StaticResource SecondaryTextBlockStyle}" Margin="0,4,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Alerts" Style="{StaticResource MutedTextBlockStyle}" />
+                        <TextBlock Text="3" FontSize="28" FontWeight="Bold" Margin="0,8,0,0" />
+                        <TextBlock Text="Items requiring review" Style="{StaticResource SecondaryTextBlockStyle}" Margin="0,4,0,0" />
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="18" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Module Workspace" Style="{StaticResource SectionTitleTextStyle}" />
+                        <TextBlock Text="Feature-specific user controls can replace this shared placeholder as each module is completed."
+                                   Style="{StaticResource SecondaryTextBlockStyle}"
+                                   TextWrapping="Wrap"
+                                   Margin="0,8,0,18" />
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Area" Style="{StaticResource MutedTextBlockStyle}" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="1" Text="Status" Style="{StaticResource MutedTextBlockStyle}" FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="2" Text="Owner" Style="{StaticResource MutedTextBlockStyle}" FontWeight="SemiBold" />
+                        </Grid>
+
+                        <Border BorderBrush="{StaticResource BorderBrushDark}" BorderThickness="0,1,0,0" Padding="0,12,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Navigation and shell" />
+                                <TextBlock Grid.Column="1" Text="Ready" Foreground="{StaticResource SuccessBrush}" />
+                                <TextBlock Grid.Column="2" Text="UI" Style="{StaticResource SecondaryTextBlockStyle}" />
+                            </Grid>
+                        </Border>
+
+                        <Border BorderBrush="{StaticResource BorderBrushDark}" BorderThickness="0,1,0,0" Padding="0,12,0,0" Margin="0,12,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Feature pages" />
+                                <TextBlock Grid.Column="1" Text="Pending" Foreground="{StaticResource WarningBrush}" />
+                                <TextBlock Grid.Column="2" Text="Feature" Style="{StaticResource SecondaryTextBlockStyle}" />
+                            </Grid>
+                        </Border>
+
+                        <Border BorderBrush="{StaticResource BorderBrushDark}" BorderThickness="0,1,0,0" Padding="0,12,0,0" Margin="0,12,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Data services" />
+                                <TextBlock Grid.Column="1" Text="Pending" Foreground="{StaticResource WarningBrush}" />
+                                <TextBlock Grid.Column="2" Text="Services" Style="{StaticResource SecondaryTextBlockStyle}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Next Integration Steps" Style="{StaticResource SectionTitleTextStyle}" />
+                        <TextBlock Text="• Replace PlaceholderPage with module pages" Style="{StaticResource SecondaryTextBlockStyle}" Margin="0,14,0,0" />
+                        <TextBlock Text="• Bind page view models to service layer" Style="{StaticResource SecondaryTextBlockStyle}" Margin="0,8,0,0" />
+                        <TextBlock Text="• Connect dashboard metrics to live data" Style="{StaticResource SecondaryTextBlockStyle}" Margin="0,8,0,0" />
+                        <TextBlock Text="• Add validation and audit feedback" Style="{StaticResource SecondaryTextBlockStyle}" Margin="0,8,0,0" />
+
+                        <Button Content="Open Module"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                HorizontalAlignment="Left"
+                                Margin="0,22,0,0" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

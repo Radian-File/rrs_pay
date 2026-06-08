@@ -1,0 +1,95 @@
+<UserControl x:Class="rrs_pay.Views.Pages.PayrollView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:rrs_pay.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Shared/PageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:PayrollViewModel />
+    </UserControl.DataContext>
+
+    <Grid Background="{StaticResource PageBackgroundBrush}" Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,18">
+            <TextBlock Text="Payroll" Style="{StaticResource PageTitleText}" />
+            <TextBlock Text="Generate payroll drafts, review employee totals, and prepare payslips." Foreground="{StaticResource SecondaryTextBrush}" />
+        </StackPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource CardBorderStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Width="220" Margin="0,0,18,0">
+                    <TextBlock Text="Payroll Period" Style="{StaticResource CaptionText}" />
+                    <ComboBox ItemsSource="{Binding Periods}" SelectedItem="{Binding SelectedPeriod}" Style="{StaticResource InputComboBoxStyle}" />
+                </StackPanel>
+                <Button Grid.Column="1" Content="Generate Payroll" Command="{Binding GeneratePayrollCommand}" Style="{StaticResource PrimaryButtonStyle}" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="2" Text="{Binding StatusMessage}" Foreground="{StaticResource MutedTextBrush}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="12,0,0,0" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <UniformGrid Grid.Row="0" Columns="3" Margin="0,0,0,14">
+                <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,14,0">
+                    <StackPanel>
+                        <TextBlock Text="Gross Pay" Foreground="{StaticResource MutedTextBrush}" />
+                        <TextBlock Text="{Binding TotalGross, StringFormat={}{0:N0}}" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource PrimaryTextBrush}" />
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource CardBorderStyle}" Margin="0,0,14,0">
+                    <StackPanel>
+                        <TextBlock Text="Deductions" Foreground="{StaticResource MutedTextBrush}" />
+                        <TextBlock Text="{Binding TotalDeductions, StringFormat={}{0:N0}}" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource WarningBrush}" />
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource CardBorderStyle}" Margin="0">
+                    <StackPanel>
+                        <TextBlock Text="Net Payroll" Foreground="{StaticResource MutedTextBrush}" />
+                        <TextBlock Text="{Binding TotalNet, StringFormat={}{0:N0}}" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource SuccessBrush}" />
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <Border Grid.Row="1" Style="{StaticResource CardBorderStyle}">
+                <StackPanel>
+                    <TextBlock Text="Payroll Items" Style="{StaticResource SectionTitleText}" />
+                    <DataGrid ItemsSource="{Binding PayrollItems}" Style="{StaticResource DarkDataGridStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Payroll No" Binding="{Binding PayrollNo}" Width="140" />
+                            <DataGridTextColumn Header="Code" Binding="{Binding EmployeeCode}" Width="100" />
+                            <DataGridTextColumn Header="Employee" Binding="{Binding EmployeeName}" Width="1.4*" />
+                            <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="1*" />
+                            <DataGridTextColumn Header="Gross" Binding="{Binding GrossPay, StringFormat={}{0:N0}}" Width="110" />
+                            <DataGridTextColumn Header="Deductions" Binding="{Binding Deductions, StringFormat={}{0:N0}}" Width="110" />
+                            <DataGridTextColumn Header="Net" Binding="{Binding NetPay, StringFormat={}{0:N0}}" Width="110" />
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

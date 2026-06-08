@@ -1,0 +1,59 @@
+<UserControl x:Class="rrs_pay.Views.Pages.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:rrs_pay.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Shared/PageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:LoginViewModel />
+    </UserControl.DataContext>
+
+    <Grid Background="{StaticResource PageBackgroundBrush}">
+        <Border Width="430"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Style="{StaticResource CardBorderStyle}">
+            <StackPanel>
+                <TextBlock Text="RRS Pay" FontSize="34" FontWeight="Bold" Foreground="{StaticResource PrimaryTextBrush}" />
+                <TextBlock Text="Payroll operations console" Foreground="{StaticResource SecondaryTextBrush}" Margin="0,4,0,24" />
+
+                <TextBlock Text="Company Code" Style="{StaticResource CaptionText}" />
+                <TextBox Text="{Binding CompanyCode, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputTextBoxStyle}" />
+
+                <TextBlock Text="Email" Style="{StaticResource CaptionText}" />
+                <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputTextBoxStyle}" />
+
+                <TextBlock Text="Password" Style="{StaticResource CaptionText}" />
+                <PasswordBox Background="{StaticResource PanelAltBackgroundBrush}"
+                             Foreground="{StaticResource PrimaryTextBrush}"
+                             BorderBrush="{StaticResource BorderBrush}"
+                             Padding="10,8"
+                             Margin="0,0,0,10"
+                             MinHeight="34" />
+
+                <CheckBox Content="Remember this workstation"
+                          IsChecked="{Binding RememberMe}"
+                          Foreground="{StaticResource SecondaryTextBrush}"
+                          Margin="0,0,0,18" />
+
+                <Button Content="Sign in"
+                        Height="42"
+                        Style="{StaticResource PrimaryButtonStyle}" />
+
+                <Border Background="{StaticResource PanelAltBackgroundBrush}" CornerRadius="10" Padding="12" Margin="0,18,0,0">
+                    <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource MutedTextBrush}" TextWrapping="Wrap" />
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

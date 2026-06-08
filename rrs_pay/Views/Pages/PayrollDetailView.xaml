@@ -1,0 +1,107 @@
+<UserControl x:Class="rrs_pay.Views.Pages.PayrollDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:rrs_pay.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Shared/PageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:PayrollDetailViewModel />
+    </UserControl.DataContext>
+
+    <ScrollViewer Background="{StaticResource PageBackgroundBrush}" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28">
+            <TextBlock Text="Payroll Detail" Style="{StaticResource PageTitleText}" />
+            <TextBlock Text="Detailed payroll calculation and payslip preview for an employee." Foreground="{StaticResource SecondaryTextBrush}" Margin="0,0,0,18" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*" />
+                    <ColumnDefinition Width="1.4*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardBorderStyle}" Margin="0,0,14,0">
+                    <StackPanel>
+                        <TextBlock Text="Employee" Style="{StaticResource SectionTitleText}" />
+                        <TextBlock Text="{Binding EmployeeName}" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource PrimaryTextBrush}" />
+                        <TextBlock Text="{Binding EmployeeCode}" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,14" />
+                        <TextBlock Text="Department" Style="{StaticResource CaptionText}" />
+                        <TextBlock Text="{Binding Department}" Foreground="{StaticResource SecondaryTextBrush}" Margin="0,0,0,10" />
+                        <TextBlock Text="Position" Style="{StaticResource CaptionText}" />
+                        <TextBlock Text="{Binding Position}" Foreground="{StaticResource SecondaryTextBrush}" Margin="0,0,0,10" />
+                        <TextBlock Text="Bank Account" Style="{StaticResource CaptionText}" />
+                        <TextBlock Text="{Binding BankAccount}" Foreground="{StaticResource SecondaryTextBrush}" Margin="0,0,0,10" />
+                        <TextBlock Text="Payroll Number" Style="{StaticResource CaptionText}" />
+                        <TextBlock Text="{Binding PayrollNo}" Foreground="{StaticResource SecondaryTextBrush}" Margin="0,0,0,10" />
+                        <TextBlock Text="Period" Style="{StaticResource CaptionText}" />
+                        <TextBlock Text="{Binding Period}" Foreground="{StaticResource SecondaryTextBrush}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource CardBorderStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Calculation" Style="{StaticResource SectionTitleText}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                <TextBlock Text="Earnings" Foreground="{StaticResource SuccessBrush}" FontWeight="SemiBold" Margin="0,0,0,8" />
+                                <ItemsControl ItemsSource="{Binding Earnings}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel Margin="0,0,0,8">
+                                                <TextBlock Text="{Binding Description}" Foreground="{StaticResource SecondaryTextBrush}" />
+                                                <TextBlock Text="{Binding Amount, StringFormat={}{0:N0}}" Foreground="{StaticResource PrimaryTextBrush}" DockPanel.Dock="Right" HorizontalAlignment="Right" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                                <TextBlock Text="Deductions" Foreground="{StaticResource WarningBrush}" FontWeight="SemiBold" Margin="0,0,0,8" />
+                                <ItemsControl ItemsSource="{Binding Deductions}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel Margin="0,0,0,8">
+                                                <TextBlock Text="{Binding Description}" Foreground="{StaticResource SecondaryTextBrush}" />
+                                                <TextBlock Text="{Binding Amount, StringFormat={}{0:N0}}" Foreground="{StaticResource PrimaryTextBrush}" DockPanel.Dock="Right" HorizontalAlignment="Right" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Grid>
+
+                        <Border Background="{StaticResource PanelAltBackgroundBrush}" CornerRadius="12" Padding="16" Margin="0,18,0,0">
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,8">
+                                    <TextBlock Text="Gross Pay" Foreground="{StaticResource SecondaryTextBrush}" />
+                                    <TextBlock Text="{Binding GrossPay, StringFormat={}{0:N0}}" Foreground="{StaticResource PrimaryTextBrush}" DockPanel.Dock="Right" />
+                                </DockPanel>
+                                <DockPanel Margin="0,0,0,8">
+                                    <TextBlock Text="Total Deductions" Foreground="{StaticResource SecondaryTextBrush}" />
+                                    <TextBlock Text="{Binding TotalDeductions, StringFormat={}{0:N0}}" Foreground="{StaticResource WarningBrush}" DockPanel.Dock="Right" />
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Text="Net Salary" FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource PrimaryTextBrush}" />
+                                    <TextBlock Text="{Binding NetSalary, StringFormat={}{0:N0}}" FontSize="18" FontWeight="SemiBold" Foreground="{StaticResource SuccessBrush}" DockPanel.Dock="Right" />
+                                </DockPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

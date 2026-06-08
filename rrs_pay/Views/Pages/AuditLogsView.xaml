@@ -1,0 +1,58 @@
+<UserControl x:Class="rrs_pay.Views.Pages.AuditLogsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:rrs_pay.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1080">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Shared/PageStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:AuditLogsViewModel />
+    </UserControl.DataContext>
+
+    <Grid Background="{StaticResource PageBackgroundBrush}" Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="0,0,0,18">
+            <TextBlock Text="Audit Logs" Style="{StaticResource PageTitleText}" />
+            <TextBlock Text="Track sensitive payroll, attendance, and employee master data changes." Foreground="{StaticResource SecondaryTextBrush}" />
+        </StackPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource CardBorderStyle}">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Width="340" Margin="0,0,18,0">
+                    <TextBlock Text="Search" Style="{StaticResource CaptionText}" />
+                    <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputTextBoxStyle}" ToolTip="Search audit activity" />
+                </StackPanel>
+                <Button Content="Apply Filter" Style="{StaticResource PrimaryButtonStyle}" VerticalAlignment="Center" />
+                <Button Content="Export" Style="{StaticResource SecondaryButtonStyle}" VerticalAlignment="Center" />
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Style="{StaticResource CardBorderStyle}">
+            <StackPanel>
+                <TextBlock Text="Recent Audit Activity" Style="{StaticResource SectionTitleText}" />
+                <DataGrid ItemsSource="{Binding AuditEntries}" Style="{StaticResource DarkDataGridStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp, StringFormat={}{0:dd MMM yyyy HH:mm}}" Width="160" />
+                        <DataGridTextColumn Header="Actor" Binding="{Binding Actor}" Width="1.2*" />
+                        <DataGridTextColumn Header="Action" Binding="{Binding Action}" Width="1.5*" />
+                        <DataGridTextColumn Header="Area" Binding="{Binding Area}" Width="110" />
+                        <DataGridTextColumn Header="Reference" Binding="{Binding Reference}" Width="1.3*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
